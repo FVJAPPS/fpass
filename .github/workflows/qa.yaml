@@ -1,4 +1,4 @@
-# This workflow is triggered on pushes to any branch except 'production' and on pull requests targeting the 'production' branch.
+# This workflow is triggered on pushes to any branch except 'production'.
 # It performs a syntax check by compiling the debug sources of the Android project using Gradle. 
 # This helps ensure that the code is syntactically correct before it is merged into the production branch.
 
@@ -9,9 +9,9 @@ on:
     branches:
       - '**'
       - '!production'
-  pull_request:
-    branches:
-      - 'production'
+  # pull_request:
+  #   branches:
+  #     - 'production'
 
 permissions:
   contents: read
