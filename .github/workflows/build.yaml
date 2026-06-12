@@ -2,7 +2,7 @@
 name: Android Release
 
 on:
-  merged_pull_request:
+  push:
     branches:
       - production
 
