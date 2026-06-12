@@ -1,10 +1,17 @@
-# This workflow performs a syntax check on the codebase to ensure that there are no compilation errors. It runs on every push to any branch, allowing developers to catch issues early in the development process.
+# This workflow is triggered on pushes to any branch except 'production' and on pull requests targeting the 'production' branch.
+# It performs a syntax check by compiling the debug sources of the Android project using Gradle. 
+# This helps ensure that the code is syntactically correct before it is merged into the production branch.
+
 name: QA
 
 on:
   push:
     branches:
       - '**'
+      - '!production'
+  pull_request:
+    branches:
+      - 'production'
 
 permissions:
   contents: read

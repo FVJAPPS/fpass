@@ -1,8 +1,16 @@
-# This workflow is triggered when a pull request is closed on the 'production' branch. If the pull request was merged, it will build the release APK and publish it as a GitHub Release. The workflow also handles version bumping and tagging using the 'mathieudutour/github-tag-action' action.
+# This workflow is triggered on pushes to the 'production' branch. It performs the following steps:
+# 1. Checks out the code from the repository.
+# 2. Bumps the version number and pushes a new tag to the repository.
+# 3. Sets up Java and Gradle environments.
+# 4. Decodes the release keystore from a base64 string stored in GitHub
+# 5. Builds the release APK using Gradle.
+# 6. Verifies that the APK was generated successfully.
+# 7. Creates a new GitHub release with the generated APK attached.
+
 name: Android Release
 
 on:
-  merged_pull_request:
+  push:
     branches:
       - production
 
@@ -12,7 +20,6 @@ permissions:
 jobs:
   build-release:
     name: Build and Publish APK
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
       KEYSTORE_FILE: release.keystore
