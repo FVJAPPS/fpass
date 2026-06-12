@@ -1,9 +1,10 @@
 name: Android Release
 
 on:
-  push:
-    tags:
-      - 'v*'
+  pull_request:
+    branches:
+      - production
+    types: [closed]
 
 permissions:
   contents: write
@@ -11,6 +12,7 @@ permissions:
 jobs:
   build-release:
     name: Build and Publish APK
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
       KEYSTORE_FILE: release.keystore
@@ -19,6 +21,14 @@ jobs:
       KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Bump Version and Push Tag
+        id: versioning
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: patch
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -40,6 +50,9 @@ jobs:
       - name: Github Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ steps.versioning.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
           files: |
             app/build/outputs/apk/release/*.apk
           generate_release_notes: true
