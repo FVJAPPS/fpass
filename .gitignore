@@ -16,4 +16,4 @@ local.properties
 
 release.keystore
 release_base64.txt
-
+tokens.yaml
