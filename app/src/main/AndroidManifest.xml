@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".application.FpassApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,9 +24,11 @@
         </activity>
 
         <activity
-            android:name=".ThemeDemoActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:name=".activities.SectionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SectionDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

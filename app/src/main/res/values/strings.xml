@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">fpass</string>
+    <string name="empty_sections">Tap + to add a section.</string>
+    <string name="empty_entries">Tap + to add an entry.</string>
+    <string name="add_section">Add Section</string>
+    <string name="add_entry">Add Entry</string>
+    <string name="section_name_hint">Section Name</string>
+    <string name="username_hint">Username</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="choose_color">Left Border Color</string>
+    <string name="pick_color">Pick Color</string>
+    <string name="section_icon">Section Icon</string>
+    <string name="upload_icon">Upload Icon</string>
+    <string name="password_label">Password:</string>
+    <string name="toggle_visibility">Toggle visibility</string>
+    <string name="generate_password">Generate Strong Password</string>
+    <string name="save">Save</string>
+    <string name="select">Select</string>
+    <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="entries_count">%d entries</string>
+    <string name="authenticate_required">Please authenticate to access the application</string>
+    <string name="no_biometric">No biometric hardware available</string>
+    <string name="no_credential">No credentials enrolled. Set up a device lock screen.</string>
+    <string name="icon_selected">Icon selected</string>
+    <string name="section_created">Section created</string>
+    <string name="entry_created">Entry created</string>
 </resources>
