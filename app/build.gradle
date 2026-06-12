@@ -5,6 +5,7 @@ plugins {
 android {
     namespace 'com.fvjapps.fpass'
     //noinspection GradleDependency
+    //noinspection GradleDependency
     compileSdk 36
 
     defaultConfig {
@@ -46,6 +47,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_21
         targetCompatibility JavaVersion.VERSION_21
     }
+
+
 }
 
 dependencies {
@@ -54,6 +57,12 @@ dependencies {
     implementation libs.constraintlayout
     implementation libs.material
     implementation libs.androidx.biometric
+    implementation libs.room.runtime
+    implementation libs.room.ktx
+    implementation libs.lifecycle.livedata
+    implementation libs.glide
+    annotationProcessor libs.room.compiler
+    annotationProcessor libs.glide.compiler
     testImplementation libs.junit
     androidTestImplementation libs.espresso.core
     androidTestImplementation libs.ext.junit

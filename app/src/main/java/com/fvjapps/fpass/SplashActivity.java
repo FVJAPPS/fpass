@@ -57,7 +57,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                Intent intent = new Intent(SplashActivity.this, ThemeDemoActivity.class);
+                Intent intent = new Intent(SplashActivity.this, com.fvjapps.fpass.activities.SectionsActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_color"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/on_surface" />
+
+    <com.fvjapps.fpass.views.SaturationBrightnessView
+        android:id="@+id/view_sat_bright"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp" />
+
+    <com.fvjapps.fpass.views.HueSliderView
+        android:id="@+id/view_hue"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <View
+            android:id="@+id/view_color_preview"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@color/primary" />
+
+        <TextView
+            android:id="@+id/text_hex_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textSize="16sp"
+            android:textColor="@color/on_surface"
+            android:fontFamily="monospace" />
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_select_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/select"
+        style="@style/Widget.Fpass.Button" />
+
+</LinearLayout>
