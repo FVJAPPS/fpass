@@ -1,3 +1,4 @@
+# This workflow is triggered when a pull request is closed on the 'production' branch. If the pull request was merged, it will build the release APK and publish it as a GitHub Release. The workflow also handles version bumping and tagging using the 'mathieudutour/github-tag-action' action.
 name: Android Release
 
 on:

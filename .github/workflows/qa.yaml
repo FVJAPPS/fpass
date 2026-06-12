@@ -1,3 +1,4 @@
+# This workflow performs a syntax check on the codebase to ensure that there are no compilation errors. It runs on every push to any branch, allowing developers to catch issues early in the development process.
 name: QA
 
 on:
