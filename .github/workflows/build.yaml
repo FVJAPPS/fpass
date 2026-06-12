@@ -23,6 +23,8 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
       - name: Release Keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$KEYSTORE_FILE"
