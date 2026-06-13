@@ -22,6 +22,24 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.ViewHolder> 
 
     private List<Entry> entries;
     private final Set<Integer> unmaskedIds = new HashSet<>();
+    private OnEntryEditListener editListener;
+    private OnEntryDeleteListener deleteListener;
+
+    public interface OnEntryEditListener {
+        void onEntryEdit(Entry entry);
+    }
+
+    public interface OnEntryDeleteListener {
+        void onEntryDelete(Entry entry);
+    }
+
+    public void setOnEntryEditListener(OnEntryEditListener listener) {
+        this.editListener = listener;
+    }
+
+    public void setOnEntryDeleteListener(OnEntryDeleteListener listener) {
+        this.deleteListener = listener;
+    }
 
     public void submitList(List<Entry> list) {
         entries = list;
@@ -67,12 +85,10 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.ViewHolder> 
             popup.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case 1:
-                        Toast.makeText(holder.itemView.getContext(),
-                                "Edit: " + entry.getUsername(), Toast.LENGTH_SHORT).show();
+                        if (editListener != null) editListener.onEntryEdit(entry);
                         return true;
                     case 2:
-                        Toast.makeText(holder.itemView.getContext(),
-                                "Delete: " + entry.getUsername(), Toast.LENGTH_SHORT).show();
+                        if (deleteListener != null) deleteListener.onEntryDelete(entry);
                         return true;
                 }
                 return false;

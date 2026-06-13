@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -31,10 +32,13 @@ import com.fvjapps.fpass.util.ImageCompressor;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-public class AddSectionDialog extends DialogFragment {
+public class EditSectionDialog extends DialogFragment {
+
+    private static final String ARG_SECTION = "section";
 
     private AppDatabase database;
-    private int selectedColor = Color.parseColor("#FF2E7D32");
+    private Section section;
+    private int selectedColor;
     private String iconHash;
     private String iconBase64;
     private String iconMimeType;
@@ -45,16 +49,38 @@ public class AddSectionDialog extends DialogFragment {
                 if (uri != null) handleImageUri(uri);
             });
 
+    public static EditSectionDialog newInstance(Section section) {
+        EditSectionDialog dialog = new EditSectionDialog();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_SECTION, section);
+        dialog.setArguments(args);
+        return dialog;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        if (getArguments() != null) {
+            section = (Section) getArguments().getSerializable(ARG_SECTION);
+        }
+        if (section == null) {
+            dismiss();
+            return super.onCreateDialog(savedInstanceState);
+        }
+
         database = ((FpassApplication) requireActivity().getApplication()).getDatabase();
+        selectedColor = section.getColor();
+        iconHash = section.getIconHash();
+
         View view = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_add_section, null);
 
+        ((TextView) view.findViewById(R.id.text_title)).setText(R.string.edit_section);
         EditText inputName = view.findViewById(R.id.input_name);
+        inputName.setText(section.getName());
         iconPreview = view.findViewById(R.id.image_icon_preview);
 
+        view.<View>findViewById(R.id.btn_pick_color).setBackgroundColor(selectedColor);
         view.findViewById(R.id.btn_pick_color).setOnClickListener(v -> {
             ColorPickerDialog picker = new ColorPickerDialog();
             picker.setOnColorSelectedListener(color -> {
@@ -68,6 +94,19 @@ public class AddSectionDialog extends DialogFragment {
             imagePicker.launch("image/*");
         });
 
+        if (iconHash != null && !iconHash.isEmpty()) {
+            new Thread(() -> {
+                MediaBucket bucket = database.mediaBucketDao().getByHashSync(iconHash);
+                if (bucket != null && bucket.getBase64Data() != null) {
+                    byte[] bytes = Base64.decode(bucket.getBase64Data(), Base64.NO_WRAP);
+                    requireActivity().runOnUiThread(() -> {
+                        iconPreview.setVisibility(View.VISIBLE);
+                        Glide.with(EditSectionDialog.this).load(bytes).override(96, 96).into(iconPreview);
+                    });
+                }
+            }).start();
+        }
+
         view.findViewById(R.id.btn_save_section).setOnClickListener(v -> {
             String name = inputName.getText().toString().trim();
             if (name.isEmpty()) {
@@ -80,10 +119,12 @@ public class AddSectionDialog extends DialogFragment {
                             iconHash, iconBase64, iconMimeType, System.currentTimeMillis());
                     database.mediaBucketDao().insert(bucket);
                 }
-                Section section = new Section(0, name, iconHash, selectedColor);
-                database.sectionDao().insert(section);
+                section.setName(name);
+                section.setIconHash(iconHash);
+                section.setColor(selectedColor);
+                database.sectionDao().update(section);
                 requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireContext(), R.string.section_created, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.section_updated, Toast.LENGTH_SHORT).show();
                     dismiss();
                 });
             }).start();

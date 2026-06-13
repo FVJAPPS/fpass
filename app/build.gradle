@@ -5,7 +5,6 @@ plugins {
 android {
     namespace 'com.fvjapps.fpass'
     //noinspection GradleDependency
-    //noinspection GradleDependency
     compileSdk 36
 
     defaultConfig {
