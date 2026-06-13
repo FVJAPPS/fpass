@@ -58,8 +58,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.versioning.outputs.new_tag }}
-          name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
+          name: Release ${{ steps.versioning.outputs.new_tag }}
+          body: ${{ steps.versioning.outputs.changelog }}
           files: |
             app/build/outputs/apk/release/*.apk
           generate_release_notes: true
