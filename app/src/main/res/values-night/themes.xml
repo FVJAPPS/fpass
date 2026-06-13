@@ -17,6 +17,5 @@
         <item name="materialButtonStyle">@style/Widget.Fpass.Button</item>
         <item name="materialCardViewStyle">@style/Widget.Fpass.Card</item>
         <item name="textInputStyle">@style/Widget.Fpass.TextInputLayout.Outlined</item>
-        <item name="toolbarStyle">@style/Widget.Fpass.Toolbar</item>
     </style>
 </resources>

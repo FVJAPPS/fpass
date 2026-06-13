@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fvjapps.fpass.R;
@@ -13,6 +13,7 @@ import com.fvjapps.fpass.adapters.EntryAdapter;
 import com.fvjapps.fpass.application.FpassApplication;
 import com.fvjapps.fpass.db.AppDatabase;
 import com.fvjapps.fpass.fragments.AddEntryDialog;
+import com.fvjapps.fpass.fragments.EditEntryDialog;
 
 public class SectionDetailActivity extends AppCompatActivity {
 
@@ -33,19 +34,24 @@ public class SectionDetailActivity extends AppCompatActivity {
 
         database = ((FpassApplication) getApplication()).getDatabase();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(sectionName != null ? sectionName : "Section");
-        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(sectionName != null ? sectionName : "Section");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         recyclerView = findViewById(R.id.recycler_entries);
         emptyText = findViewById(R.id.text_empty);
 
         adapter = new EntryAdapter();
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnEntryEditListener(entry -> {
+            EditEntryDialog.newInstance(entry).show(getSupportFragmentManager(), "edit_entry");
+        });
+
+        adapter.setOnEntryDeleteListener(entry -> {
+            new Thread(() -> database.entryDao().delete(entry)).start();
+        });
 
         database.entryDao().getEntriesBySectionId(sectionId).observe(this, entries -> {
             adapter.submitList(entries);

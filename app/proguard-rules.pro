@@ -1,5 +1,7 @@
 # Room
 -keep class * extends androidx.room.RoomDatabase
+-keep class * extends androidx.room.RoomDatabase { *; }
+-keep class * extends com.fvjapps.fpass.db.AppDatabase { *; }
 -keep @androidx.room.Entity class *
 -keep @androidx.room.Dao interface *
 -dontwarn androidx.room.paging.**

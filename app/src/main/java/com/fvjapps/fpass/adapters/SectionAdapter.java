@@ -29,9 +29,19 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     private final MediaBucketDao mediaBucketDao;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private OnSectionClickListener clickListener;
+    private OnSectionEditListener editListener;
+    private OnSectionDeleteListener deleteListener;
 
     public interface OnSectionClickListener {
         void onSectionClick(Section section);
+    }
+
+    public interface OnSectionEditListener {
+        void onSectionEdit(Section section);
+    }
+
+    public interface OnSectionDeleteListener {
+        void onSectionDelete(Section section);
     }
 
     public SectionAdapter(MediaBucketDao mediaBucketDao) {
@@ -40,6 +50,14 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
 
     public void setOnSectionClickListener(OnSectionClickListener listener) {
         this.clickListener = listener;
+    }
+
+    public void setOnSectionEditListener(OnSectionEditListener listener) {
+        this.editListener = listener;
+    }
+
+    public void setOnSectionDeleteListener(OnSectionDeleteListener listener) {
+        this.deleteListener = listener;
     }
 
     public void submitList(List<SectionWithEntries> list) {
@@ -100,10 +118,10 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
             popup.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case 1:
-                        Toast.makeText(holder.itemView.getContext(), "Edit: " + section.getName(), Toast.LENGTH_SHORT).show();
+                        if (editListener != null) editListener.onSectionEdit(section);
                         return true;
                     case 2:
-                        Toast.makeText(holder.itemView.getContext(), "Delete: " + section.getName(), Toast.LENGTH_SHORT).show();
+                        if (deleteListener != null) deleteListener.onSectionDelete(section);
                         return true;
                 }
                 return false;

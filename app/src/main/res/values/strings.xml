@@ -28,4 +28,10 @@
     <string name="icon_selected">Icon selected</string>
     <string name="section_created">Section created</string>
     <string name="entry_created">Entry created</string>
+    <string name="section_updated">Section updated</string>
+    <string name="entry_updated">Entry updated</string>
+    <string name="edit_section">Edit Section</string>
+    <string name="edit_entry">Edit Entry</string>
+    <string name="press_back_again">Press BACK button again to exit.</string>
+    <string name="auth_required">Make a screen lock or enroll your fingerprint before accessing the app</string>
 </resources>
