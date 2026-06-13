@@ -24,7 +24,7 @@
     <com.fvjapps.fpass.views.HueSliderView
         android:id="@+id/view_hue"
         android:layout_width="250dp"
-        android:layout_height="30dp"
+        android:layout_height="48dp"
         android:layout_marginTop="12dp" />
 
     <LinearLayout
@@ -40,14 +40,17 @@
             android:layout_height="48dp"
             android:background="@color/primary" />
 
-        <TextView
+        <EditText
             android:id="@+id/text_hex_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:textSize="16sp"
             android:textColor="@color/on_surface"
-            android:fontFamily="monospace" />
+            android:fontFamily="monospace"
+            android:inputType="textFilter"
+            android:maxLength="7"
+            android:digits="0123456789ABCDEFabcdef#" />
 
     </LinearLayout>
 
