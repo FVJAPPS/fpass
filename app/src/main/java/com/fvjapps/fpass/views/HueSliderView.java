@@ -19,7 +19,7 @@ public class HueSliderView extends View {
     private Paint thumbPaint;
     private RectF barRect;
     private float hue = 0f;
-    private float thumbRadius = 12f;
+    private float thumbRadius = 18f;
     private OnHueChangeListener listener;
 
     public interface OnHueChangeListener {

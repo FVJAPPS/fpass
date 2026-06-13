@@ -61,6 +61,12 @@ public class SaturationBrightnessView extends View {
     public float getSaturation() { return saturation; }
     public float getBrightness() { return brightness; }
 
+    public void setSaturationBrightness(float saturation, float brightness) {
+        this.saturation = Math.max(0f, Math.min(1f, saturation));
+        this.brightness = Math.max(0f, Math.min(1f, brightness));
+        invalidate();
+    }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
